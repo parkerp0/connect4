@@ -1,0 +1,10 @@
+
+
+class board
+{
+    public:
+
+    private:
+
+
+};
