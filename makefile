@@ -1,11 +1,11 @@
 bld = build/
 cFlags = 
 
-$(bld)final: $(bld)main.o $(bld)printer.o $(bld)
-	g++ $(cFlags) $(bld)main.o $(bld)printer.o -o $(bld)final
+$(bld)final: $(bld)main.o $(bld)printer.o $(bld)board.o $(bld)engine.o $(bld)
+	g++ $(cFlags) $(bld)main.o $(bld)printer.o $(bld)board.o $(bld)engine.o -lncurses -o $(bld)final
 
 
-$(bld)main.o: main.cpp mapGenerator.hpp
+$(bld)main.o: main.cpp
 	g++ $(cFlags) -c main.cpp -o $(bld)main.o
 
 $(bld)printer.o: printer.cpp printer.hpp

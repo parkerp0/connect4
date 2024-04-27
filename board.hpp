@@ -1,3 +1,6 @@
+#ifndef BOARD_HPP
+#define BOARD_HPP
+
 #include <math.h>
 
 class board
@@ -12,3 +15,5 @@ class board
         int turn;
 
 };
+
+#endif
