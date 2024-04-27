@@ -9,6 +9,6 @@ void deletePrinter();
 int printMenu();
 void printBoard(int **field);
 void printWin(int player);
-
+int getChoice(int topBound);
 
 #endif

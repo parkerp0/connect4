@@ -13,6 +13,7 @@ class board
     private:
         int **field;
         int turn;
+        int highlightColumn;
 
 };
 

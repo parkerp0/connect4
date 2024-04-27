@@ -9,9 +9,9 @@ void initPrinter()
     init_pair(2, COLOR_BLUE, COLOR_BLACK);
     init_pair(3, COLOR_RED, COLOR_WHITE);
     init_pair(4, COLOR_BLUE, COLOR_WHITE);
-
 }
-void deltePrinter()
+
+void deletePrinter()
 {
     endwin();
 }
@@ -28,13 +28,42 @@ int printMenu()
     refresh();
     return getChoice(3);
 }
-void printBoard(int **field)
+void printBoard(int **field, int highlight)
 {
+    clear();
+    int offset = 0;
+    for(int i = 0; i < 7; i++)
+    {
+        if(i == highlight)offset = 2;
+        else offset = 0;
 
+        for(int j = 0; j < 6; j++)
+        {
+            if(field[i][j] == 1)
+            attron(COLOR_PAIR(1 + offset));
+            else
+            attron(COLOR_PAIR(2 + offset));
+            mvprintw(j, i, "O");
+        }
+    }
+    refresh();
 }
 void printWin(int player)
 {
-
+    clear();
+    if(player == 1)
+    {
+        attron(COLOR_PAIR(1));
+        mvprintw(0, 0, "Player 1 wins!");
+        attroff(COLOR_PAIR(1));
+    }
+    else
+    {
+        attron(COLOR_PAIR(2));
+        mvprintw(0, 0, "Player 2 wins!");
+        attroff(COLOR_PAIR(2));
+    }
+    refresh();
 }
 int getChoice(int topBound)
 {

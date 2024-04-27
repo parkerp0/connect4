@@ -4,25 +4,34 @@
 
 int main()
 {
-
+    board *boardInstance;
+    engine *engineInstance;
     initPrinter();
     switch(printMenu())
     {
         case 1:
+        {
+            boardInstance = new board();
+            engineInstance = new engine();
+
+
+
             
             break;
+        }
         case 2:
-
+        {
+            
             break;
+        }
         case 3:
+        {
             deletePrinter();
             return 0;
             break;
-        
+        }
     }
-
-    
-
+    deletePrinter();
 
 
 }

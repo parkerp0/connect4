@@ -16,6 +16,7 @@ board::board()
         }
     }
 
+    highlightColumn = -1;
     turn = rand() % 2 + 1;
 }
 
@@ -45,6 +46,7 @@ int board::checkWin()
             }
         }
     }
+    return 0;
 }
 
 int board::drop(int column, int player)
