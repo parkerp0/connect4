@@ -1,8 +1,8 @@
 bld = build/
 cFlags = 
 
-$(bld)final: $(bld)main.o $(bld)printer.o $(bld)board.o $(bld)engine.o $(bld)
-	g++ $(cFlags) $(bld)main.o $(bld)printer.o $(bld)board.o $(bld)engine.o -lncurses -o $(bld)final
+$(bld)final: $(bld)main.o $(bld)printer.o $(bld)board.o $(bld)engine.o $(bld)tree.o $(bld)
+	g++ $(cFlags) $(bld)main.o $(bld)printer.o $(bld)board.o $(bld)engine.o $(bld)tree.o -lncurses -o $(bld)final
 
 
 $(bld)main.o: main.cpp
@@ -16,6 +16,9 @@ $(bld)board.o: board.cpp board.hpp
 
 $(bld)engine.o: engine.cpp engine.hpp
 	g++ $(cFlags) -c engine.cpp -o $(bld)engine.o
+
+$(bld)tree.o: tree.cpp tree.hpp
+	g++ $(cFlags) -c tree.cpp -o $(bld)tree.o
 
 $(bld):
 	mkdir build
