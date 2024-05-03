@@ -2,6 +2,10 @@
 #define TREE_HPP
 
 #include "board.hpp"
+#include <limits>
+
+#define INT_MAX (std::numeric_limits<int>::max())
+#define INT_MIN (std::numeric_limits<int>::min())
 
 class Tree {
     public:
@@ -16,6 +20,7 @@ class Tree {
     private:
         struct Node {
             Node();
+            Node(board *boardState,Node *parent);
             ~Node();
             board *boardState;
             Node *parent;

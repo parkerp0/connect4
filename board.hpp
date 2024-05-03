@@ -10,6 +10,8 @@ class board
         board(board *oldBoard);
         board(board *oldBoard,int column, int player);
         int checkWin();
+        int countTriples(int player);
+        int countDoubles(int player);
         int drop(int column, int player);
 
     private:

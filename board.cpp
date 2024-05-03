@@ -77,11 +77,11 @@ int board::checkWin()
                 {
                     return field[i][j];
                 }
-                if(field[i][j] == field[i+1][j+1] && field[i][j] == field[i+2][j+2] && field[i][j] == field[i+3][j+3])//diagonal
+                if(i < 4 && field[i][j] == field[i+1][j+1] && field[i][j] == field[i+2][j+2] && field[i][j] == field[i+3][j+3])//diagonal
                 {
                     return field[i][j];
                 }
-                if(field[i][j] == field[i-1][j+1] && field[i][j] == field[i-2][j+2] && field[i][j] == field[i-3][j+3])//diagonal
+                if(i > 2 && field[i][j] == field[i-1][j+1] && field[i][j] == field[i-2][j+2] && field[i][j] == field[i-3][j+3])//diagonal
                 {
                     return field[i][j];
                 }
@@ -89,6 +89,74 @@ int board::checkWin()
         }
     }
     return 0;
+}
+
+int board::countTriples(int player)
+{
+    int count = 0;
+
+    for(int i; i < 7; i++)
+    {
+        for(int j; j < 6; j++)
+        {
+            if(field[i][j] == player)
+            {
+                if(i < 5 && field[i+1][j] == player && field[i+2][j] == player)//horizontal
+                    count++;
+
+                if(j < 4)//bounds check for vertical
+                {
+                    if(field[i][j+1] == player && field[i][j+2] == player)//vertical
+                    {
+                        count++;
+                    }
+                    if(i < 5 && field[i+1][j+1] == player && field[i+2][j+2] == player)//diagonal
+                    {
+                        count++;
+                    }
+                    if(i > 1 && field[i-1][j+1] == player && field[i-2][j+2] == player)//diagonal
+                    {
+                        count++;
+                    }
+                }
+            }
+        }
+    }
+    return count;
+}
+
+int board::countDoubles(int player)
+{
+    int count = 0;
+
+    for(int i; i < 7; i++)
+    {
+        for(int j; j < 6; j++)
+        {
+            if(field[i][j] == player)
+            {
+                if(i < 5 && field[i+1][j] == player && field[i+2][j] != player)//horizontal
+                    count++;
+
+                if(j < 4)//bounds check for vertical
+                {
+                    if(field[i][j+1] == player && field[i][j+2] != player)//vertical
+                    {
+                        count++;
+                    }
+                    if(i < 5 && field[i+1][j+1] == player && field[i+2][j+2] != player)//diagonal
+                    {
+                        count++;
+                    }
+                    if(i > 1 && field[i-1][j+1] == player && field[i-2][j+2] != player)//diagonal
+                    {
+                        count++;
+                    }
+                }
+            }
+        }
+    }
+    return count;
 }
 
 int board::drop(int column, int player)

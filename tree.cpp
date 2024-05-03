@@ -13,11 +13,6 @@ Tree::Tree()
 
 Tree::~Tree()
 {
-    for(int i = 0; i < 7; i++)
-    {
-        if(root->children[i] != NULL)
-            delete root->children[i];
-    }
     delete root;
 }
 
@@ -38,9 +33,8 @@ board* Tree::getBoardState()
 
 void Tree::insert(board *boardState, board *parent, int index)
 {
-    Node *newNode = new Node();
-    newNode->boardState = boardState;
-    newNode->parent = find(parent);
+    Node *temp = find(parent);
+    Node *newNode = new Node(boardState,temp);
     newNode->parent->children[index] = newNode;
 }
 
@@ -52,8 +46,39 @@ void Tree::registerMove(int index)
     root->parent = NULL;
 }
 
-int evaluate(board *boardState)
+Tree::Node::Node()
 {
-    //TODO: implement evaluation function
+    //TODO: write node default constructor
+}
+
+Tree::Node::Node(board *boardState,Node *parent)
+{
+    this->boardState = boardState;
+    this->parent = parent;
+    for(int i = 0; i < 7; i++)
+    {
+        children[i] = NULL;
+    }
+    evaluation = 0;
+    
+}
+
+Tree::Node::~Node()
+{
+    delete boardState;
+    for(int i = 0; i < 7; i++)
+    {
+        if(children[i] != NULL)
+            delete children[i];
+    }
+}
+
+int evaluate(board *boardState)//the engine will also be player 2
+{//engine will be the maximizer and player will be the minimizer
+    int win = boardState->checkWin();//returns 0 if the position is still open
+    if(win)return (win == 2)? INT_MAX : INT_MIN;
+
+    
+
     return 0;
 }
