@@ -20,7 +20,7 @@ board::board()
     turn = rand() % 2 + 1;
 }
 
-board::board(board *oldBoard)
+board::board(board *oldBoard,int player)
 {
     field = new int*[7];
     for (int i = 0; i < 7; i++)
@@ -37,7 +37,7 @@ board::board(board *oldBoard)
     }
 
     highlightColumn = -1;
-    turn = oldBoard->turn;
+    turn = player;
 }
 
 board::board(board *oldBoard,int column, int player)
@@ -57,6 +57,8 @@ board::board(board *oldBoard,int column, int player)
     }//copy the field
 
     drop(column, player);//add new piece to the board
+
+    
 
     highlightColumn = column;//highlight the column that was just played
     turn = (player == 1) ? 2 : 1;//switch turns
@@ -91,7 +93,7 @@ int board::checkWin()
     return 0;
 }
 
-int board::countTriples(int player)
+int board::countOpenTripleEnds(int player)
 {
     int count = 0;
 
@@ -101,22 +103,35 @@ int board::countTriples(int player)
         {
             if(field[i][j] == player)
             {
-                if(i < 5 && field[i+1][j] == player && field[i+2][j] == player)//horizontal
-                    count++;
-
+                if(i < 5 && field[i+1][j] == player && field[i+2][j] == player)//horizontal triple
+                {
+                    if(i<4 && field[i+3][j] == 0)// check for open ends of the triple
+                        count++;
+                    if(i>0 && field[i-1][j] == 0)
+                        count++;
+                }
                 if(j < 4)//bounds check for vertical
                 {
                     if(field[i][j+1] == player && field[i][j+2] == player)//vertical
                     {
-                        count++;
+                        if(j<3 && field[i][j+3] == 0) // check for open ends of the triple
+                            count++;
+                        if(j>0 && field[i][j-1] == 0)
+                            count++;
                     }
                     if(i < 5 && field[i+1][j+1] == player && field[i+2][j+2] == player)//diagonal
                     {
-                        count++;
+                        if(i<4 && j<3 && field[i+3][j+3] == 0)// check for open ends of the triple
+                            count++;
+                        if(i>0 && j>0 && field[i-1][j-1] == 0)
+                            count++;
                     }
                     if(i > 1 && field[i-1][j+1] == player && field[i-2][j+2] == player)//diagonal
                     {
-                        count++;
+                        if(i>2 && j<3 && field[i-3][j+3] == 0) // check for open ends of the triple
+                            count++;
+                        if(i<6 && j>0 && field[i+1][j-1] == 0)
+                            count++;
                     }
                 }
             }
@@ -125,7 +140,7 @@ int board::countTriples(int player)
     return count;
 }
 
-int board::countDoubles(int player)
+int board::countOpenDoubleEnds(int player)
 {
     int count = 0;
 
@@ -135,22 +150,34 @@ int board::countDoubles(int player)
         {
             if(field[i][j] == player)
             {
-                if(i < 5 && field[i+1][j] == player && field[i+2][j] != player)//horizontal
-                    count++;
+                if(i < 6 && field[i+1][j] == player )//horizontal
+                    if(i < 5 && field[i+2][j] == 0) // check for open ends of the double
+                        count++;
+                    if(i > 0 && field[i-1][j] == 0)
+                        count++;
 
-                if(j < 4)//bounds check for vertical
+                if(j < 5)//bounds check for vertical
                 {
-                    if(field[i][j+1] == player && field[i][j+2] != player)//vertical
+                    if(field[i][j+1] == player)//vertical
                     {
-                        count++;
+                        if(j < 4 && field[i][j+2] == 0) // check for open ends of the double
+                            count++;
+                        if(j > 0 && field[i][j-1] == 0)
+                            count++;
                     }
-                    if(i < 5 && field[i+1][j+1] == player && field[i+2][j+2] != player)//diagonal
+                    if(i < 6 && field[i+1][j+1] == player)//diagonal
                     {
-                        count++;
+                        if(i < 5 && j < 4 && field[i+2][j+2] == 0) // check for open ends of the double
+                            count++;
+                        if(i > 0 && j > 0 && field[i-1][j-1] == 0)
+                            count++;
                     }
-                    if(i > 1 && field[i-1][j+1] == player && field[i-2][j+2] != player)//diagonal
+                    if(i > 0 && field[i-1][j+1] == player)//diagonal
                     {
-                        count++;
+                        if(i > 1 && j < 4 && field[i-2][j+2] == 0) // check for open ends of the double
+                            count++;
+                        if(i < 6 && j > 0 && field[i+1][j-1] == 0)
+                            count++;
                     }
                 }
             }
@@ -172,3 +199,7 @@ int board::drop(int column, int player)
     return -1;
 }
 
+int board::getTurn()
+{
+    return turn;
+}
