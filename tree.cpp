@@ -51,3 +51,9 @@ void Tree::registerMove(int index)
     delete root->parent;
     root->parent = NULL;
 }
+
+int evaluate(board *boardState)
+{
+    //TODO: implement evaluation function
+    return 0;
+}

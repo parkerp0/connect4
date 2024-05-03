@@ -11,7 +11,7 @@ class Tree {
         void registerMove(int index);
         board* getBoardState();
         //takes the selected move and advances the tree to the next while freeing everything else
-
+        friend int evaluate(board *boardState);
 
     private:
         struct Node {

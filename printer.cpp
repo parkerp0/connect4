@@ -22,10 +22,7 @@ int printMenu()
     attron(COLOR_PAIR(1));
     mvprintw(1, 0, "Now in color");
     attroff(COLOR_PAIR(1));
-    mvprintw(2, 0, "1. Play against AI");
-    mvprintw(3, 0, "2. Online multiplayer");
-    mvprintw(4, 0, "3. Quit");
-    refresh();
+    mvprintw(2, 0, "1. Play against the MINIMAX algorithm");
     return getChoice(3);
 }
 void printBoard(int **field, int highlight)
