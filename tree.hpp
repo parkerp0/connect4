@@ -20,11 +20,14 @@ class Tree {
             board *boardState;
             Node *parent;
             Node *children[7];
+            int evaluation;
         };
         Node *root;
 
+        
+
         void trimTree(int index);//clears all nodes except the one at index
         Node* find(board *boardState);
-}
+};
 
 #endif

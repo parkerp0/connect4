@@ -7,6 +7,8 @@ class board
 {
     public:
         board();
+        board(board *oldBoard);
+        board(board *oldBoard,int column, int player);
         int checkWin();
         int drop(int column, int player);
 

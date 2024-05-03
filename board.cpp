@@ -20,6 +20,48 @@ board::board()
     turn = rand() % 2 + 1;
 }
 
+board::board(board *oldBoard)
+{
+    field = new int*[7];
+    for (int i = 0; i < 7; i++)
+    {
+        field[i] = new int[6];
+    }
+
+    for (int i = 0; i < 7; i++)
+    {
+        for (int j = 0; j < 6; j++)
+        {
+            field[i][j] = oldBoard->field[i][j];
+        }
+    }
+
+    highlightColumn = -1;
+    turn = oldBoard->turn;
+}
+
+board::board(board *oldBoard,int column, int player)
+{
+    field = new int*[7];
+    for (int i = 0; i < 7; i++)
+    {
+        field[i] = new int[6];
+    }//allocate memory for the field
+
+    for (int i = 0; i < 7; i++)
+    {
+        for (int j = 0; j < 6; j++)
+        {
+            field[i][j] = oldBoard->field[i][j];
+        }
+    }//copy the field
+
+    drop(column, player);//add new piece to the board
+
+    highlightColumn = column;//highlight the column that was just played
+    turn = (player == 1) ? 2 : 1;//switch turns
+}
+
 int board::checkWin()
 {
     for(int i; i < 7; i++)
