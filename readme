@@ -1,0 +1,6 @@
+This is a game of connect4 with a simple engine to decide on moves.
+It should be running minimax but I ran out of time to work due to CPRE 288 so it only does maximization
+This leads to a number of problems with the engine namly that it will average out states that should be able to know are bad for it
+to run the program build with the normal make target and then run with ./build/final
+you use a,d to move the selected column and then s to drop the piece.
+Goodluck
