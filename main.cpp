@@ -13,12 +13,12 @@ int main()
 
     printMenu();
     
-    
+    currentBoard->print();
 
     while(1)
     {
-        currentBoard->print();
-        engine->printEvaluations();
+        
+        
         switch(getch())
         {
             case 'a':
@@ -38,13 +38,18 @@ int main()
                     if(currentBoard->checkWin())
                     {
                         printWin(currentBoard->getTurn());
+                        delete engine;
+                        deletePrinter();
                         return 0;
                     }
                     //std::this_thread::sleep_for(std::chrono::milliseconds(1000));
                     currentBoard = engine->findMove();
+                    engine->printEvaluations();
                     if(currentBoard->checkWin())
                     {
                         printWin(currentBoard->getTurn());
+                        delete engine;
+                        deletePrinter();
                         return 0;
                     }
                 }
@@ -57,5 +62,5 @@ int main()
         // }
     }
 
-    deletePrinter();
+    
 }

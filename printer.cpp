@@ -54,6 +54,7 @@ void printBoard(int **field, int highlight)
 
 void printBoardStats(int redWin, int blueWin, int redTriples, int blueTriples, int redDoubles, int blueDoubles,int evaluation)
 {
+    attron(COLOR_PAIR(3));
     mvprintw(1,8,"RED WIN: %d", redWin);
     mvprintw(2,8,"BLUE WIN: %d", blueWin);
     mvprintw(3,8,"RED TRIPLES: %d", redTriples);
@@ -65,6 +66,7 @@ void printBoardStats(int redWin, int blueWin, int redTriples, int blueTriples, i
 
 void printEvals(int *evals, int size)
 {
+    attron(COLOR_PAIR(3));
     for(int i = 0; i < size; i++)
     {
         mvprintw(i+8,0, "%d", evals[i]);
@@ -74,6 +76,7 @@ void printEvals(int *evals, int size)
 
 void printWin(int player)
 {
+    attron(COLOR_PAIR(3));
     clear();
     if(player == 1)
     {
@@ -88,6 +91,7 @@ void printWin(int player)
         attroff(COLOR_PAIR(2));
     }
     refresh();
+    getch();
 }
 
 int getChoice(int topBound)
