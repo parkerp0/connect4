@@ -17,16 +17,7 @@ Engine::~Engine()
     delete root;
 }
 
-void Engine::trimTree(int index)
-{
-    for(int i = 0; i < 7; i++)
-    {
-        if(i != index && root->children[i] != NULL)
-        {
-            delete root->children[i];
-        }
-    }
-}
+
 board* Engine::getBoardState()
 {
     return root->boardState;
@@ -42,8 +33,8 @@ board* Engine::getBoardState()
 board* Engine::registerMove()
 {
     int index = root->boardState->getHighlightColumn();
-    trimTree(index);
     root = root->children[index];
+    root->parent->children[index] = NULL;//this is to prevent the tree from being deleted when the root is deleted
     delete root->parent;
     root->parent = NULL;
     return root->boardState;
@@ -110,7 +101,7 @@ void Engine::evaluateCascade(Node *node,int depth)
 
     //if not at max depth evalute the children 
     int average = 0;
-    for(int i; i < 7; i++)
+    for(int i = 0; i < 7; i++)
     {
 
         if(node->children[i] == NULL)
@@ -151,8 +142,9 @@ board* Engine::findMove()
 
 board* Engine::registerMove(int index)
 {
-    trimTree(index);
+    //trimTree(index);
     root = root->children[index];
+    root->parent->children[index] = NULL;//this is to prevent the tree from being deleted when the root is deleted
     delete root->parent;
     root->parent = NULL;
     return root->boardState;

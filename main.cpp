@@ -4,8 +4,8 @@
 
 int main()
 {
-    Engine engine = Engine();
-    board *currentBoard = engine.getBoardState();
+    Engine *engine = new Engine();
+    board *currentBoard = engine->getBoardState();
     initPrinter();
 
 
@@ -15,7 +15,7 @@ int main()
 
     while(1)
     {
-        currentBoard = engine.findMove();
+        //currentBoard = engine->findMove();
         currentBoard->print();
         switch(getch())
         {
@@ -28,7 +28,7 @@ int main()
             break;
 
             case 's':
-                currentBoard = engine.registerMove();
+                currentBoard->drop(currentBoard->getHighlightColumn(),currentBoard->getTurn());
             break;
         }
     }

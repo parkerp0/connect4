@@ -7,8 +7,10 @@ void initPrinter()
 
     init_pair(1, COLOR_RED, COLOR_BLACK);
     init_pair(2, COLOR_BLUE, COLOR_BLACK);
-    init_pair(3, COLOR_RED, COLOR_WHITE);
-    init_pair(4, COLOR_BLUE, COLOR_WHITE);
+    init_pair(3, COLOR_WHITE, COLOR_BLACK);
+    init_pair(4, COLOR_RED, COLOR_WHITE);
+    init_pair(5, COLOR_BLUE, COLOR_WHITE);
+    init_pair(6, COLOR_BLACK, COLOR_WHITE);
 }
 
 void deletePrinter()
@@ -33,16 +35,18 @@ void printBoard(int **field, int highlight)
     int offset = 0;
     for(int i = 0; i < 7; i++)
     {
-        if(i == highlight)offset = 2;
+        if(i == highlight)offset = 3;
         else offset = 0;
 
         for(int j = 0; j < 6; j++)
         {
             if(field[i][j] == 1)
-            attron(COLOR_PAIR(1 + offset));
+                attron(COLOR_PAIR(1 + offset));
+            else if(field[i][j] == 2)
+                attron(COLOR_PAIR(2 + offset));
             else
-            attron(COLOR_PAIR(2 + offset));
-            mvprintw(j, i, "O");
+                attron(COLOR_PAIR(3 + offset));
+            mvprintw(5-j, i, "O");
         }
     }
     refresh();

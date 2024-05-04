@@ -22,7 +22,8 @@ board::board()
 
 board::~board()
 {
-    for (int i = 0; i < 7; i++)
+    int i = 0;
+    for (i = 0; i < 7; i++)
     {
         delete[] field[i];
     }
@@ -202,11 +203,12 @@ int board::countOpenDoubleEnds(int player)
 
 int board::drop(int column, int player)
 {
-    for(int i = 0; i < 5; i++)
+    for(int i = 0; i < 6; i++)
     {
         if(field[column][i] == 0)
         {
-            field[column][i] = player;
+            field[column][i] = turn;
+            turn = (turn == 1) ? 2 : 1;
             return 0;
         }
     }

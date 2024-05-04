@@ -41,7 +41,6 @@ class Engine {
 
         board* registerMove(int index);//takes the selected move of the engine
         void evaluateCascade(Node *node,int depth);
-        void trimTree(int index);//clears all nodes except the one at index
         Node* find(board *boardState);
         void nodeInsert(Node *parent, board *boardState, int index);
 };
