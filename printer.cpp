@@ -52,6 +52,26 @@ void printBoard(int **field, int highlight)
     refresh();
 }
 
+void printBoardStats(int redWin, int blueWin, int redTriples, int blueTriples, int redDoubles, int blueDoubles,int evaluation)
+{
+    mvprintw(1,8,"RED WIN: %d", redWin);
+    mvprintw(2,8,"BLUE WIN: %d", blueWin);
+    mvprintw(3,8,"RED TRIPLES: %d", redTriples);
+    mvprintw(4,8,"BLUE TRIPLES: %d", blueTriples);
+    mvprintw(5,8,"RED DOUBLES: %d", redDoubles);
+    mvprintw(6,8,"BLUE DOUBLES: %d", blueDoubles);
+    mvprintw(7,8,"Evalution: %d",evaluation);
+}
+
+void printEvals(int *evals, int size)
+{
+    for(int i = 0; i < size; i++)
+    {
+        mvprintw(i+8,0, "%d", evals[i]);
+    }
+    refresh();
+}
+
 void printWin(int player)
 {
     clear();

@@ -17,7 +17,7 @@ board::board()
     }
 
     highlightColumn = 3;
-    turn = 2;
+    turn = 1;
 }
 
 board::~board()
@@ -46,7 +46,7 @@ board::board(board *oldBoard,int player)
         }
     }
 
-    highlightColumn = -1;
+    highlightColumn = 3;
     turn = player;
 }
 
@@ -81,9 +81,9 @@ void board::print()
 
 int board::checkWin()
 {
-    for(int i; i < 7; i++)
+    for(int i = 0; i < 7; i++)
     {
-        for(int j; j < 6; j++)
+        for(int j = 0; j < 6; j++)
         {
             if(i < 4 && field[i][j] == field[i+1][j] && field[i][j] == field[i+2][j] && field[i][j] == field[i+3][j])//horizontal
                 return field[i][j];
@@ -112,9 +112,9 @@ int board::countOpenTripleEnds(int player)
 {
     int count = 0;
 
-    for(int i; i < 7; i++)
+    for(int i = 0; i < 7; i++)
     {
-        for(int j; j < 6; j++)
+        for(int j = 0; j < 6; j++)
         {
             if(field[i][j] == player)
             {
@@ -159,9 +159,9 @@ int board::countOpenDoubleEnds(int player)
 {
     int count = 0;
 
-    for(int i; i < 7; i++)
+    for(int i = 0; i < 7; i++)
     {
-        for(int j; j < 6; j++)
+        for(int j = 0; j < 6; j++)
         {
             if(field[i][j] == player)
             {
@@ -208,11 +208,22 @@ int board::drop(int column, int player)
         if(field[column][i] == 0)
         {
             field[column][i] = turn;
-            turn = (turn == 1) ? 2 : 1;
             return 0;
         }
     }
     return -1;
+}
+
+int board::checkDrop()
+{
+    for(int i = 0; i < 6; i++)
+    {
+        if(field[highlightColumn][i] == 0)
+        {
+            return 1;
+        }
+    }
+    return 0;
 }
 
 int board::moveHighlight(int move)

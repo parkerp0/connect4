@@ -20,6 +20,7 @@ class board
         int moveHighlight(int move);
         int getTurn();
         int getHighlightColumn();
+        int checkDrop();
 
     private: 
         int **field;

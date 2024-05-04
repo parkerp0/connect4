@@ -7,7 +7,7 @@
 #define TRIPLE_WEIGHT 100
 #define DOUBLE_WEIGHT 10
 
-#define maxDepth 5
+#define maxDepth 6
 
 #define INT_MAX (std::numeric_limits<int>::max())
 #define INT_MIN (std::numeric_limits<int>::min())
@@ -23,6 +23,7 @@ class Engine {
         void updateEvaluation(board *boardState);
         //takes the selected move and advances the tree to the next while freeing everything else
         friend int evaluate(board *boardState);
+        void printEvaluations();
         board* findMove();
 
     private:

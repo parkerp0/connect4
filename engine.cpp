@@ -9,7 +9,7 @@ Engine::Engine()
     {
         root->children[i] = NULL;
     }
-
+    evaluateCascade(root,0);
 }
 
 Engine::~Engine()
@@ -76,7 +76,7 @@ void Engine::nodeInsert(Node *parent, board *boardState, int index)
 int evaluate(board *boardState)//the engine will also be player 2
 {//engine will be the maximizer and player will be the minimizer
     int win = boardState->checkWin();//returns 0 if the position is still open
-    if(win)return (win == 2)? INT_MAX : INT_MIN;
+    if(win)return (win == 2)? 10000000 : -10000000;
 
     int tripleDif = boardState->countOpenTripleEnds(2) - boardState->countOpenTripleEnds(1);
     int doubleDif = boardState->countOpenDoubleEnds(2) - boardState->countOpenDoubleEnds(1);
@@ -115,7 +115,10 @@ void Engine::evaluateCascade(Node *node,int depth)
                 node->children[i]->evaluation = 0;//if the move is invalid set eval to 0 so it does not move the average
                 node->children[i]->invalid = 1;
             }else // if the move is valid evaluate the child
+            {
                 evaluateCascade(node->children[i],depth+1);
+                average += node->children[i]->evaluation;
+            }
         }
         else if(!node->children[i]->invalid)//if not invalid evaluate the child with cascade
         {
@@ -123,6 +126,9 @@ void Engine::evaluateCascade(Node *node,int depth)
             average += node->children[i]->evaluation;
         }
     }
+    int win = node->boardState->checkWin();//returns 0 if the position is still open
+    if(win != 0)node->evaluation = (win ==2)? 10000000 : -10000000;
+    else
     node->evaluation = average/7;
 }
 
@@ -130,14 +136,16 @@ board* Engine::findMove()
 {
     evaluateCascade(root,0);
     int max = INT_MIN;
+    int index = 0;
     for(int i = 0; i < 7; i++)
     {
-        if(root->children[i]->evaluation > max)
+        if(root->children[i]->evaluation > max && !root->children[i]->invalid)
         {
             max = root->children[i]->evaluation;
+            index = i;
         }
     }
-    return registerMove(max);
+    return registerMove(index);
 }
 
 board* Engine::registerMove(int index)
@@ -148,4 +156,18 @@ board* Engine::registerMove(int index)
     delete root->parent;
     root->parent = NULL;
     return root->boardState;
+}
+
+void Engine::printEvaluations()
+{
+    int *evals = new int[7];
+    for(int i = 0; i < 7; i++)
+    {
+        if(root->children[i] == NULL)
+            evals[i] = 0;
+        else
+        evals[i] = root->children[i]->evaluation;
+    }
+    printEvals(evals,7);
+    printBoardStats(0,0,root->boardState->countOpenTripleEnds(1),root->boardState->countOpenTripleEnds(2),root->boardState->countOpenDoubleEnds(1),root->boardState->countOpenDoubleEnds(2),evaluate(root->boardState));
 }
