@@ -7,7 +7,7 @@
 void initPrinter();
 void deletePrinter();
 int printMenu();
-void printBoard(int **field);
+void printBoard(int **field,int highlight);
 void printWin(int player);
 int getChoice(int topBound);
 

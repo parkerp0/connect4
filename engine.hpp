@@ -18,7 +18,7 @@ class Engine {
         Engine();
         ~Engine();
         void insert(board *boardState, board *parent, int index);
-        void registerMove(int index);
+        board* registerMove();
         board* getBoardState();
         void updateEvaluation(board *boardState);
         //takes the selected move and advances the tree to the next while freeing everything else
@@ -37,8 +37,9 @@ class Engine {
             int invalid;
         };
         Node *root;
+        int size;
 
-        
+        board* registerMove(int index);//takes the selected move of the engine
         void evaluateCascade(Node *node,int depth);
         void trimTree(int index);//clears all nodes except the one at index
         Node* find(board *boardState);

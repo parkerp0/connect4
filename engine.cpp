@@ -9,6 +9,7 @@ Engine::Engine()
     {
         root->children[i] = NULL;
     }
+
 }
 
 Engine::~Engine()
@@ -31,20 +32,23 @@ board* Engine::getBoardState()
     return root->boardState;
 }
 
-void Engine::insert(board *boardState, board *parent, int index)
-{
-    Node *temp = find(parent);
-    Node *newNode = new Node(boardState,temp);
-    newNode->parent->children[index] = newNode;
-}
+// void Engine::insert(board *boardState, board *parent, int index)
+// {
+//     Node *temp = find(parent);
+//     Node *newNode = new Node(boardState,temp);
+//     newNode->parent->children[index] = newNode;
+// }
 
-void Engine::registerMove(int index)
+board* Engine::registerMove()
 {
+    int index = root->boardState->getHighlightColumn();
     trimTree(index);
     root = root->children[index];
     delete root->parent;
     root->parent = NULL;
+    return root->boardState;
 }
+
 
 Engine::Node::Node()
 {
@@ -73,6 +77,11 @@ Engine::Node::~Node()
     }
 }
 
+void Engine::nodeInsert(Node *parent, board *boardState, int index)
+{
+    parent->children[index] = new Node(boardState,parent);
+}
+
 int evaluate(board *boardState)//the engine will also be player 2
 {//engine will be the maximizer and player will be the minimizer
     int win = boardState->checkWin();//returns 0 if the position is still open
@@ -84,12 +93,11 @@ int evaluate(board *boardState)//the engine will also be player 2
     return tripleDif*TRIPLE_WEIGHT + doubleDif*DOUBLE_WEIGHT;//allows for the board evaluation to be tuned by changing the weights
 }
 
-void Engine::updateEvaluation(board *boardState)
-{
-    Node *temp = find(boardState);
-    evaluateCascade(temp,0);
-
-}
+// void Engine::updateEvaluation(board *boardState)
+// {
+//     Node *temp = find(boardState);
+//     evaluateCascade(temp,0);
+// }
 
 void Engine::evaluateCascade(Node *node,int depth)
 {//evaluates a tree up to a certain depth to make a descion
@@ -138,6 +146,14 @@ board* Engine::findMove()
             max = root->children[i]->evaluation;
         }
     }
-    registerMove(max);
+    return registerMove(max);
+}
+
+board* Engine::registerMove(int index)
+{
+    trimTree(index);
+    root = root->children[index];
+    delete root->parent;
+    root->parent = NULL;
     return root->boardState;
 }

@@ -15,6 +15,7 @@ void deletePrinter()
 {
     endwin();
 }
+
 int printMenu()
 {
     clear();
@@ -25,6 +26,7 @@ int printMenu()
     mvprintw(2, 0, "1. Play against the MINIMAX algorithm");
     return getChoice(3);
 }
+
 void printBoard(int **field, int highlight)
 {
     clear();
@@ -45,6 +47,7 @@ void printBoard(int **field, int highlight)
     }
     refresh();
 }
+
 void printWin(int player)
 {
     clear();
@@ -62,6 +65,7 @@ void printWin(int player)
     }
     refresh();
 }
+
 int getChoice(int topBound)
 {
     int choice = 0;

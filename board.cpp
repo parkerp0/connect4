@@ -16,8 +16,17 @@ board::board()
         }
     }
 
-    highlightColumn = -1;
-    turn = rand() % 2 + 1;
+    highlightColumn = 3;
+    turn = 2;
+}
+
+board::~board()
+{
+    for (int i = 0; i < 7; i++)
+    {
+        delete[] field[i];
+    }
+    delete[] field;
 }
 
 board::board(board *oldBoard,int player)
@@ -62,6 +71,11 @@ board::board(board *oldBoard,int column, int player)
 
     highlightColumn = column;//highlight the column that was just played
     turn = (player == 1) ? 2 : 1;//switch turns
+}
+
+void board::print()
+{
+    printBoard(field,highlightColumn);
 }
 
 int board::checkWin()
@@ -199,7 +213,18 @@ int board::drop(int column, int player)
     return -1;
 }
 
+int board::moveHighlight(int move)
+{
+    highlightColumn = (highlightColumn + move + 7)%7;
+    return highlightColumn; 
+}
+
 int board::getTurn()
 {
     return turn;
+}
+
+int board::getHighlightColumn()
+{
+    return highlightColumn;
 }
