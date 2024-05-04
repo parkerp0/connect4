@@ -127,9 +127,10 @@ void Engine::evaluateCascade(Node *node,int depth)
         }
     }
     int win = node->boardState->checkWin();//returns 0 if the position is still open
-    if(win != 0)node->evaluation = (win ==2)? 10000000 : -10000000;
+    if(win != 0)
+        node->evaluation = (win ==2)? 10000000 : -10000000;
     else
-    node->evaluation = average/7;
+        node->evaluation = average/7;
 }
 
 board* Engine::findMove()

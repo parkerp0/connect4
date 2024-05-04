@@ -22,7 +22,7 @@ class Engine {
         board* getBoardState();
         void updateEvaluation(board *boardState);
         //takes the selected move and advances the tree to the next while freeing everything else
-        friend int evaluate(board *boardState);
+        
         void printEvaluations();
         board* findMove();
 
@@ -45,5 +45,7 @@ class Engine {
         Node* find(board *boardState);
         void nodeInsert(Node *parent, board *boardState, int index);
 };
+
+int evaluate(board *boardState);
 
 #endif

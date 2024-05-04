@@ -85,17 +85,20 @@ int board::checkWin()
     {
         for(int j = 0; j < 6; j++)
         {
-            if(i < 4 && field[i][j] == field[i+1][j] && field[i][j] == field[i+2][j] && field[i][j] == field[i+3][j])//horizontal
-                return field[i][j];
+            if(field[i][j] != 0)
+            {
+                if(i < 4 && field[i][j] == field[i+1][j] && field[i][j] == field[i+2][j] && field[i][j] == field[i+3][j])//horizontal
+                    return field[i][j];
 
-            if(j < 3 && field[i][j] == field[i][j+1] && field[i][j] == field[i][j+2] && field[i][j] == field[i][j+3])//vertical
-                return field[i][j];
+                if(j < 3 && field[i][j] == field[i][j+1] && field[i][j] == field[i][j+2] && field[i][j] == field[i][j+3])//vertical
+                    return field[i][j];
 
-            if(i < 4 && j < 3 && field[i][j] == field[i+1][j+1] && field[i][j] == field[i+2][j+2] && field[i][j] == field[i+3][j+3])//diagonal from top-left to bottom-right
-                return field[i][j];
+                if(i < 4 && j < 3 && field[i][j] == field[i+1][j+1] && field[i][j] == field[i+2][j+2] && field[i][j] == field[i+3][j+3])//diagonal from top-left to bottom-right
+                    return field[i][j];
 
-            if(i > 2 && j < 3 && field[i][j] == field[i-1][j+1] && field[i][j] == field[i-2][j+2] && field[i][j] == field[i-3][j+3])//diagonal from bottom-left to top-right
-                return field[i][j];
+                if(i > 2 && j < 3 && field[i][j] == field[i-1][j+1] && field[i][j] == field[i-2][j+2] && field[i][j] == field[i-3][j+3])//diagonal from bottom-left to top-right
+                    return field[i][j];
+            }
         }
     }
     return 0;
